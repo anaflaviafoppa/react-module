@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import Home from './views/Home';
 import Profile from './views/Profile';
 import Nav from './components/Nav';
@@ -19,7 +19,7 @@ export default class App extends Component {
   render() {
     return (
       <Fragment>
-        <Nav />
+        <Nav auth={this.auth} />
         <div className="body">
           <Route
             exact
@@ -34,8 +34,17 @@ export default class App extends Component {
             exact
             render={(props) => <Callback auth={this.auth} {...props} />}
           ></Route>
-          
-          <Route path="/profile" exact component={Profile}></Route>
+
+          <Route
+            path="/profile"
+            render={(props) => 
+              this.auth.isAuthenticated() ? (
+                <Profile auth={this.auth} {...props} />
+              ) : (
+                <Redirect to="/" />
+              )
+            }
+          ></Route>
         </div>
       </Fragment>
     );

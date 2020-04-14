@@ -1,3 +1,62 @@
+#Course Content:
+
+## 1. Authorization and Authentication Standards
+- Why Use an Auth Provider?
+- Choosing an OAuth Flow
+- OpenID Connect
+- JSON Web Tokens
+
+## 2. Create a React App
+
+## 3. Configure AuthO
+- Sign up for Auth0
+- Key Auth Decisions
+- Create an App in the Auth0 Dashboard
+- Configure Environment Variables
+- Create Auth Object
+
+## 4. Implement Login
+- Setup Login
+- Review Callback URL and JWT
+- Parse Callback URL in Callback Component
+- Pick a Token Storage Approach
+- Implement Handle Authentication
+- Check if User Is Authenticated
+
+## 5. Logout, Signup and User Profile
+- Implement Logout
+- Get User Profile
+- Configure Profile Page Route
+- Display User Profile
+
+## 6. API Authorization Fundamentals
+- Create Environment Variables
+- Create API with Node and Express
+- Call Public API via React
+- Configure Express to Parse JWTs
+- Call Private API
+
+## 7. API Authorization with Scopes, Rules, and Roles
+- Intro to OAuth Scopes
+- Create a New Scope
+- Configure Express to Validate Scopes
+- Create React Page That Validates Scopes
+- Assign Admin Role via a Rule
+- Validate Roles in Access Tokens
+- Authentication Approach Options
+
+## 8. Customization and Enhancements
+- Redirect to Previous Page Upon Login
+- Create PrivateRoute Component
+- Create AuthContext
+- Declare AuthContext Provider
+- Consume AuthContext
+- Store Tokens in Memory
+- Silent Authentication and Token Renewal
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

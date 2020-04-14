@@ -10,42 +10,45 @@ import Public from './views/Public';
 import Private from './views/Private';
 import Courses from './views/Courses';
 import PrivateRoute from './PrivateRoute';
+import AuthContext from './Context/AuthContext';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
-
-    //isnt necessary put on stage
-    this.auth = new Auth(this.props.history);
+    this.state = {
+      auth: new Auth(this.props.history),
+    };
+    
   }
 
   render() {
+    const { auth } = this.state;
     return (
-      <Fragment>
-        <Nav auth={this.auth} />
+      <AuthContext.Provider value={ auth }>
+        <Nav auth={auth} />
         <div className="body">
-          <Route exact path="/" render={(props) => <Home auth={this.auth} {...props} />}></Route>
+          <Route exact path="/" render={(props) => <Home auth={auth} {...props} />}></Route>
 
           <Route
             exact
             path="/callback"
-            render={(props) => <Callback auth={this.auth} {...props} />}
+            render={(props) => <Callback auth={auth} {...props} />}
           ></Route>
 
-          <PrivateRoute path="/profile" component={Profile} auth={this.auth}></PrivateRoute>
+          <PrivateRoute path="/profile" component={Profile} auth={auth}></PrivateRoute>
 
           <Route path="/public" component={Public} />
 
-          <PrivateRoute path="/private" component={Private} auth={this.auth}></PrivateRoute>
+          <PrivateRoute path="/private" component={Private} auth={auth}></PrivateRoute>
 
           <PrivateRoute
             path="/courses"
             component={Courses}
-            auth={this.auth}
+            auth={auth}
             scopes={['read:courses']}
           ></PrivateRoute>
         </div>
-      </Fragment>
+      </AuthContext.Provider>
     );
   }
 }

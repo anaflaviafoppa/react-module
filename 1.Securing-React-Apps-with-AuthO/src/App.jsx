@@ -8,6 +8,7 @@ import Callback from './views/Callback';
 import Auth from './Auth/Auth';
 import Public from './views/Public';
 import Private from './views/Private';
+import Courses from './views/Courses';
 
 export default class App extends Component {
   constructor(props) {
@@ -22,11 +23,7 @@ export default class App extends Component {
       <Fragment>
         <Nav auth={this.auth} />
         <div className="body">
-          <Route
-            exact
-            path="/"
-            render={(props) => <Home auth={this.auth} {...props} />}
-          ></Route>
+          <Route exact path="/" render={(props) => <Home auth={this.auth} {...props} />}></Route>
 
           <Route
             exact
@@ -52,6 +49,17 @@ export default class App extends Component {
             render={(props) =>
               this.auth.isAuthenticated() ? (
                 <Private auth={this.auth} {...props} />
+              ) : (
+                this.auth.login()
+              )
+            }
+          ></Route>
+
+          <Route
+            path="/courses"
+            render={(props) =>
+              this.auth.isAuthenticated() && this.auth.userHasScopes(['read:courses']) ? (
+                <Courses auth={this.auth} {...props} />
               ) : (
                 this.auth.login()
               )

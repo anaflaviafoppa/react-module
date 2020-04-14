@@ -9,6 +9,7 @@ import Auth from './Auth/Auth';
 import Public from './views/Public';
 import Private from './views/Private';
 import Courses from './views/Courses';
+import PrivateRoute from './PrivateRoute';
 
 export default class App extends Component {
   constructor(props) {
@@ -31,40 +32,18 @@ export default class App extends Component {
             render={(props) => <Callback auth={this.auth} {...props} />}
           ></Route>
 
-          <Route
-            path="/profile"
-            render={(props) =>
-              this.auth.isAuthenticated() ? (
-                <Profile auth={this.auth} {...props} />
-              ) : (
-                <Redirect to="/" />
-              )
-            }
-          ></Route>
+          <PrivateRoute path="/profile" component={Profile} auth={this.auth}></PrivateRoute>
 
           <Route path="/public" component={Public} />
 
-          <Route
-            path="/private"
-            render={(props) =>
-              this.auth.isAuthenticated() ? (
-                <Private auth={this.auth} {...props} />
-              ) : (
-                this.auth.login()
-              )
-            }
-          ></Route>
+          <PrivateRoute path="/private" component={Private} auth={this.auth}></PrivateRoute>
 
-          <Route
+          <PrivateRoute
             path="/courses"
-            render={(props) =>
-              this.auth.isAuthenticated() && this.auth.userHasScopes(['read:courses']) ? (
-                <Courses auth={this.auth} {...props} />
-              ) : (
-                this.auth.login()
-              )
-            }
-          ></Route>
+            component={Courses}
+            auth={this.auth}
+            scopes={['read:courses']}
+          ></PrivateRoute>
         </div>
       </Fragment>
     );

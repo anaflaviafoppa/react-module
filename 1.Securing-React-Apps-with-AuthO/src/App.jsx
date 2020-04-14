@@ -18,13 +18,12 @@ export default class App extends Component {
     this.state = {
       auth: new Auth(this.props.history),
     };
-    
   }
 
   render() {
     const { auth } = this.state;
     return (
-      <AuthContext.Provider value={ auth }>
+      <AuthContext.Provider value={auth}>
         <Nav auth={auth} />
         <div className="body">
           <Route exact path="/" render={(props) => <Home auth={auth} {...props} />}></Route>
@@ -35,16 +34,15 @@ export default class App extends Component {
             render={(props) => <Callback auth={auth} {...props} />}
           ></Route>
 
-          <PrivateRoute path="/profile" component={Profile} auth={auth}></PrivateRoute>
+          <PrivateRoute path="/profile" component={Profile}></PrivateRoute>
 
           <Route path="/public" component={Public} />
 
-          <PrivateRoute path="/private" component={Private} auth={auth}></PrivateRoute>
+          <PrivateRoute path="/private" component={Private}></PrivateRoute>
 
           <PrivateRoute
             path="/courses"
             component={Courses}
-            auth={auth}
             scopes={['read:courses']}
           ></PrivateRoute>
         </div>

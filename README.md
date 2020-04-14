@@ -1,6 +1,6 @@
 # React Module
 
-Specialization in React, intermediate to advanced.
+React intermediate to advanced.
 
 # 1. Securing React Apps with Auth0
 

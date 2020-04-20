@@ -7,17 +7,17 @@ export function saveCourse(course) {
     dispatcher.dispatch({
       //THIS IS AN ACTION:
       //Hey dispatcher, go tell all the stores that a course was just created.
-      actionType: actionTypes.CREATE_COURSE,
-      course: savedCourse
+      actionType: course.id ? actionTypes.UPDATE_COURSE : actionTypes.CREATE_COURSE,
+      course: savedCourse,
     });
   });
 }
 
-export function loadCourses(){
+export function loadCourses() {
   return courseApi.getCourses().then((courses) => {
     dispatcher.dispatch({
       actionType: actionTypes.LOAD_COURSES,
-      courses: courses // can be just courses
+      courses: courses, // can be just courses
     });
   });
 }

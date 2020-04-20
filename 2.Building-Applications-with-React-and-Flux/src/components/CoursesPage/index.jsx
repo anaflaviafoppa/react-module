@@ -50,7 +50,7 @@ import courseStore from '../../stores/courseStore';
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import CourseList from '../CourseList';
-import { loadCourses } from '../../actions/courseActions';
+import { loadCourses, deleteCourse } from '../../actions/courseActions';
 
 const CoursesPage = (props) => {
   const [courses, setCourses] = useState(courseStore.getCourses());
@@ -70,13 +70,16 @@ const CoursesPage = (props) => {
     setCourses(courseStore.getCourses());
   }
 
+  
+
+  
   return (
     <Fragment>
       <h1>Courses</h1>
       <Link className="btn btn-primary" to="/course">
         Add Course
       </Link>
-      <CourseList courses={courses} />
+      <CourseList courses={courses} deleteCourse={deleteCourse}/>
     </Fragment>
   );
 };

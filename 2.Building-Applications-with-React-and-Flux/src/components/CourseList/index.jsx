@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 const CourseList = (props) => {
   return (
@@ -10,6 +11,7 @@ const CourseList = (props) => {
           <th>Title</th>
           <th>Author</th>
           <th>Category</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -20,6 +22,7 @@ const CourseList = (props) => {
             </td>
             <td>{course.authorId === 1 ? 'Cory House' : 'Scott Allen'}</td>
             <td>{course.category}</td>
+            <td><Button variant="danger" onClick={() => props.deleteCourse(course.id)}>Delete</Button></td>
           </tr>
         ))}
       </tbody>
@@ -30,6 +33,7 @@ const CourseList = (props) => {
 //ONLY RUN IN DEVELOPMENT MODE:
 
 CourseList.propTypes = {
+  deleteCourse: PropTypes.func.isRequired,
   courses: PropTypes.arrayOf({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,

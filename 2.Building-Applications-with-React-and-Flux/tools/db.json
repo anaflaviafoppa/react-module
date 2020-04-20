@@ -1,13 +1,6 @@
 {
   "courses": [
     {
-      "id": 1,
-      "title": "Securing React Apps with Auth02",
-      "slug": "react-auth0-authentication-security",
-      "authorId": 1,
-      "category": "JavaScript"
-    },
-    {
       "id": 2,
       "title": "React: The Big Picture",
       "slug": "react-big-picture",
@@ -69,38 +62,6 @@
       "slug": "web-components-shadow-dom",
       "authorId": 1,
       "category": "HTML5"
-    },
-    {
-      "id": 11,
-      "slug": "fdf",
-      "title": "fdf",
-      "authorId": 1,
-      "category": "dfdf",
-      "createdAt": 1587394765954
-    },
-    {
-      "id": 12,
-      "slug": "rgrgrg",
-      "title": "rgrgrg",
-      "authorId": 2,
-      "category": "hhh",
-      "createdAt": 1587396567641
-    },
-    {
-      "id": 13,
-      "slug": "thghgf",
-      "title": "thghgf",
-      "authorId": 1,
-      "category": "jj",
-      "createdAt": 1587410296855
-    },
-    {
-      "id": 14,
-      "slug": "curso-novo",
-      "title": "Curso novo",
-      "authorId": 1,
-      "category": "dgdg",
-      "createdAt": 1587410468003
     }
   ],
   "authors": [

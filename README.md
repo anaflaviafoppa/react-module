@@ -13,4 +13,10 @@ React intermediate to advanced.
 - React Router and Flux,
 - Node, Webpack, Babel and Bootstrap.
 
+## 3. Building Applications with React and Redux
+
+React is a library with so much power, but so few strong opinions. So building something significant requires a large number of decisions and work to build the foundation. 
+- React Router and Redux,
+- Node, Webpack,  ESLint, npm scripts, Jest, React Testing Library, Enzyme.
+
 

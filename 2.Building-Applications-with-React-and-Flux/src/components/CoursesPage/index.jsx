@@ -1,9 +1,7 @@
 //import React, { Component, Fragment } from 'react';
 import { getCourses } from '../../api/courseApi';
 
-
 //AS CLASS MODEL:
-
 
 // export default class CoursesPage extends Component {
 //   //You can use state outside constructor
@@ -50,6 +48,7 @@ import { getCourses } from '../../api/courseApi';
 // }
 
 import React, { useState, useEffect, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import CourseList from '../CourseList';
 
 const CoursesPage = (props) => {
@@ -62,6 +61,9 @@ const CoursesPage = (props) => {
   return (
     <Fragment>
       <h1>Courses</h1>
+      <Link className="btn btn-primary" to="/course">
+        Add Course
+      </Link>
       <CourseList courses={courses} />
     </Fragment>
   );

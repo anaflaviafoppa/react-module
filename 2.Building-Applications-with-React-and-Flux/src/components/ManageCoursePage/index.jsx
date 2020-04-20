@@ -7,6 +7,7 @@ import * as courseActions from '../../actions/courseActions';
 
 const ManegeCoursePage = (props) => {
   const [errors, setErrors] = useState({});
+  const [courses, setCourses] = useState(courseStore.getCourses());
   const [course, setCourse] = useState({
     id: null,
     slug: '',
@@ -17,11 +18,21 @@ const ManegeCoursePage = (props) => {
 
   //Like ComponentDidMount
   useEffect(() => {
+    courseStore.addChangeListener(onChange);
+
     const slug = props.match.params.slug; //will redirect /courses/:slug
-    if (slug) {
+    if (courses.length === 0) {
+      courseActions.loadCourses();
+    } else if (slug) {
       setCourse(courseStore.getCourseBySlug(slug));
     }
-  }, [props.match.params.slug]);
+
+    return () => courseStore.removeAllListeners(onChange);
+  }, [courses.length, props.match.params.slug]);
+
+  function onChange() {
+    setCourses(courseStore.getCourses());
+  }
 
   function handleChange({ target }) {
     setCourse({ ...course, [target.name]: target.value });

@@ -22,12 +22,12 @@ class CourseStore extends EventEmitter {
     this.emit(CHANGE_EVENT);
   }
 
-  getCourses(){
+  getCourses() {
     return _courses;
   }
 
-  getCourseBySlug(slug){
-    return _courses.find(course => course.slug === slug);
+  getCourseBySlug(slug) {
+    return _courses.find((course) => course.slug === slug);
   }
 }
 
@@ -40,6 +40,12 @@ Dispatcher.register((action) => {
       //We need emit a change:
       store.emitChange();
       break;
+
+    case actionTypes.LOAD_COURSES:
+      _courses = action.courses;
+      store.emitChange();
+      break;
+
     default:
     //nothing to do here
   }

@@ -50,13 +50,25 @@ import courseStore from '../../stores/courseStore';
 import React, { useState, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import CourseList from '../CourseList';
+import { loadCourses } from '../../actions/courseActions';
 
 const CoursesPage = (props) => {
-  const [courses, setCourses] = useState([]);
+  const [courses, setCourses] = useState(courseStore.getCourses());
 
   useEffect(() => {
-    setCourses(courseStore.getCourses());
+    //Since our component is connected to the Flux store, 
+    //when courses are added to the store, onChange will be
+    //called.
+
+    courseStore.addChangeListener(onChange);
+    if(courseStore.getCourses().length === 0 ) loadCourses();
+    //cleanup on unmount
+    return () => courseStore.removeChangeListener(onChange);
   }, []);
+
+  function onChange() {
+    setCourses(courseStore.getCourses());
+  }
 
   return (
     <Fragment>

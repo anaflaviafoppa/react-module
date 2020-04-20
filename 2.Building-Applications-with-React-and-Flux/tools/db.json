@@ -85,6 +85,22 @@
       "authorId": 2,
       "category": "hhh",
       "createdAt": 1587396567641
+    },
+    {
+      "id": 13,
+      "slug": "thghgf",
+      "title": "thghgf",
+      "authorId": 1,
+      "category": "jj",
+      "createdAt": 1587410296855
+    },
+    {
+      "id": 14,
+      "slug": "curso-novo",
+      "title": "Curso novo",
+      "authorId": 1,
+      "category": "dgdg",
+      "createdAt": 1587410468003
     }
   ],
   "authors": [

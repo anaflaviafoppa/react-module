@@ -1,5 +1,5 @@
 //import React, { Component, Fragment } from 'react';
-import { getCourses } from '../../api/courseApi';
+import courseStore from '../../stores/courseStore';
 
 //AS CLASS MODEL:
 
@@ -55,7 +55,7 @@ const CoursesPage = (props) => {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    getCourses().then((_courses) => setCourses(_courses));
+    setCourses(courseStore.getCourses());
   }, []);
 
   return (

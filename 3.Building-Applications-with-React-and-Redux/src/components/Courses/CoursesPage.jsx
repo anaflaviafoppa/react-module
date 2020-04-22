@@ -2,6 +2,12 @@ import React, { useState, useEffect, Fragment, Component } from 'react';
 import { Link } from 'react-router-dom';
 import CourseList from './CourseList.jsx';
 
+//This function will connect components to redux
+import { connect } from 'react-redux';
+
+import * as courseActions from '../../redux/actions/courseActions';
+import PropTypes from 'prop-types';
+
 // const CoursesPage = (props) => {
 //   const [course, setCourse] = useState({
 //     title: "",
@@ -20,27 +26,26 @@ import CourseList from './CourseList.jsx';
 
 // export default CoursesPage;
 
-export default class CoursesPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      course: {
-        title: '',
-      },
-    };
-    
-  }
+class CoursesPage extends Component {
+  state = {
+    course: {
+      title: '',
+    },
+  };
 
   handleChange = (event) => {
     const course = { ...this.state.course, title: event.target.value };
     this.setState({ course });
-  }
+  };
 
-  handleSubmit = (event) =>{
+  handleSubmit = (event) => {
     //prevent the page reload:
     event.preventDefault();
-    alert(this.state.course.title);
-  }
+
+    //ACTION TO ADD A NEW COURSE:
+    this.props.dispatch(courseActions.createCourse(this.state.course));
+    
+  };
 
   render() {
     return (
@@ -55,3 +60,23 @@ export default class CoursesPage extends Component {
     );
   }
 }
+
+CoursesPage.propTypes ={
+  dispatch: PropTypes.func.isRequired
+}
+
+//This func. determines what state is passed to our
+//component via props.
+function mapStateToProps(state) {
+  return {
+    courses: state.courses,
+  };
+}
+
+//This lets us declare what actions to pass 
+//to our component on props
+// function mapDispatchToProps(){
+
+// }
+
+export default connect(mapStateToProps)(CoursesPage);

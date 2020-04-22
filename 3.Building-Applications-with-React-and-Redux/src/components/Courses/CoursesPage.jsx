@@ -28,9 +28,10 @@ export default class CoursesPage extends Component {
         title: '',
       },
     };
+    
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     const course = { ...this.state.course, title: event.target.value };
     this.setState({ course });
   }
@@ -40,7 +41,7 @@ export default class CoursesPage extends Component {
       <Fragment>
         <h1>Courses</h1>
         <form>
-          <h3>Ad Course</h3>
+          <h3>Add Course</h3>
           <input type="text" onChange={this.handleChange} value={this.state.course.title} />
           <input type="submit" value="Save" />
         </form>

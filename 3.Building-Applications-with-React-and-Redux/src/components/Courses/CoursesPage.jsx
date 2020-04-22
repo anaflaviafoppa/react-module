@@ -36,11 +36,17 @@ export default class CoursesPage extends Component {
     this.setState({ course });
   }
 
+  handleSubmit = (event) =>{
+    //prevent the page reload:
+    event.preventDefault();
+    alert(this.state.course.title);
+  }
+
   render() {
     return (
       <Fragment>
         <h1>Courses</h1>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <h3>Add Course</h3>
           <input type="text" onChange={this.handleChange} value={this.state.course.title} />
           <input type="submit" value="Save" />

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import * as courseActions from '../../redux/actions/courseActions';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from "redux";
+import { bindActionCreators } from 'redux';
 
 // const CoursesPage = (props) => {
 //   const [course, setCourse] = useState({
@@ -28,36 +28,14 @@ import { bindActionCreators } from "redux";
 // export default CoursesPage;
 
 class CoursesPage extends Component {
-  state = {
-    course: {
-      title: '',
-    },
-  };
-
-  handleChange = (event) => {
-    const course = { ...this.state.course, title: event.target.value };
-    this.setState({ course });
-  };
-
-  handleSubmit = (event) => {
-    //prevent the page reload:
-    event.preventDefault();
-    //ACTION TO ADD A NEW COURSE:
-    this.props.actions.createCourse(this.state.course);
-  };
-
   render() {
     return (
       <Fragment>
         <h1>Courses</h1>
-        <form onSubmit={this.handleSubmit}>
-          <h3>Add Course</h3>
-          <input type="text" onChange={this.handleChange} value={this.state.course.title} />
-          <input type="submit" value="Save" />
-          {this.props.courses.map((course) => (
-            <div key={course.title}>{course.title}</div>
-          ))}
-        </form>
+
+        {this.props.courses.map((course) => (
+          <div key={course.title}>{course.title}</div>
+        ))}
       </Fragment>
     );
   }
@@ -80,7 +58,7 @@ function mapStateToProps(state) {
 //to our component on props
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(courseActions, dispatch)
+    actions: bindActionCreators(courseActions, dispatch),
   };
 }
 

@@ -1,15 +1,14 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import HomePage from './components/Home/HomePage.jsx';
 import AboutPage from './components/About/AboutPage.jsx';
-import Header from './components/common/Header.jsx'
+import Header from './components/common/Header.jsx';
 import NotFoundPage from './components/PagenotFound/NotFoundPage.jsx';
 import CoursesPage from './components/Courses/CoursesPage.jsx';
 
-
 function App() {
   return (
-    <div  className="container-fluid">
+    <div className="container-fluid">
       <Header />
       <Switch>
         <Route path="/" exact component={HomePage} />

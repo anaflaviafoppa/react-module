@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Fragment, Component } from 'react';
-import { Link } from 'react-router-dom';
-import CourseList from './CourseList.jsx';
+import React, { Fragment, Component } from 'react';
+// import { Link } from 'react-router-dom';
+// import CourseList from './CourseList.jsx';
 
 //This function will connect components to redux
 import { connect } from 'react-redux';
@@ -41,7 +41,6 @@ class CoursesPage extends Component {
   handleSubmit = (event) => {
     //prevent the page reload:
     event.preventDefault();
-
     //ACTION TO ADD A NEW COURSE:
     this.props.dispatch(courseActions.createCourse(this.state.course));
     
@@ -55,6 +54,9 @@ class CoursesPage extends Component {
           <h3>Add Course</h3>
           <input type="text" onChange={this.handleChange} value={this.state.course.title} />
           <input type="submit" value="Save" />
+          {this.props.courses.map(course => (
+            <div key={course.title}>{course.title}</div>
+          ))} 
         </form>
       </Fragment>
     );
@@ -62,12 +64,14 @@ class CoursesPage extends Component {
 }
 
 CoursesPage.propTypes ={
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  courses: PropTypes.array.isRequired
 }
 
 //This func. determines what state is passed to our
 //component via props.
 function mapStateToProps(state) {
+  
   return {
     courses: state.courses,
   };

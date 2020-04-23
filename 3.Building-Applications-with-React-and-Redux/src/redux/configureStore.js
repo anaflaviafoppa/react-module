@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import rootReducer from './reducers/courseReducer';
+import rootReducer from './reducers/index';
 
 //Evita de mutate o state
 import reduxImmutableStateInvariant from "redux-immutable-state-invariant";

@@ -42,8 +42,7 @@ class CoursesPage extends Component {
     //prevent the page reload:
     event.preventDefault();
     //ACTION TO ADD A NEW COURSE:
-    this.props.dispatch(courseActions.createCourse(this.state.course));
-    
+    this.props.createCourse(this.state.course);
   };
 
   render() {
@@ -54,33 +53,34 @@ class CoursesPage extends Component {
           <h3>Add Course</h3>
           <input type="text" onChange={this.handleChange} value={this.state.course.title} />
           <input type="submit" value="Save" />
-          {this.props.courses.map(course => (
+          {this.props.courses.map((course) => (
             <div key={course.title}>{course.title}</div>
-          ))} 
+          ))}
         </form>
       </Fragment>
     );
   }
 }
 
-CoursesPage.propTypes ={
-  dispatch: PropTypes.func.isRequired,
-  courses: PropTypes.array.isRequired
-}
+CoursesPage.propTypes = {
+  courses: PropTypes.array.isRequired,
+  createCourse: PropTypes.func.isRequired,
+};
 
 //This func. determines what state is passed to our
 //component via props.
 function mapStateToProps(state) {
-  
   return {
     courses: state.courses,
   };
 }
 
-//This lets us declare what actions to pass 
+//This lets us declare what actions to pass
 //to our component on props
-// function mapDispatchToProps(){
+function mapDispatchToProps(dispatch) {
+  return {
+    createCourse: (course) => dispatch(courseActions.createCourse(course)),
+  };
+}
 
-// }
-
-export default connect(mapStateToProps)(CoursesPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);

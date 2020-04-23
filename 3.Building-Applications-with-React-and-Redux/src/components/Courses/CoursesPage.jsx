@@ -28,6 +28,11 @@ import { bindActionCreators } from 'redux';
 // export default CoursesPage;
 
 class CoursesPage extends Component {
+  componentDidMount(){
+    this.props.actions.loadCourses().catch(error => {
+      alert('Loading courses failed' + error);
+    })
+  }
   render() {
     return (
       <Fragment>

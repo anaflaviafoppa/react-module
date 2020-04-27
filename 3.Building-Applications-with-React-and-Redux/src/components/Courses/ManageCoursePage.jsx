@@ -10,7 +10,15 @@ import CourseForm from './CourseForm.jsx';
 import { newCourse } from '../../../tools/mockData';
 
 //Usar ...props para não haver conflito com a variável "course"
-function ManageCoursePage({ courses, authors, loadAuthors, loadCourses, saveCourse, history, ...props }) {
+function ManageCoursePage({
+  courses,
+  authors,
+  loadAuthors,
+  loadCourses,
+  saveCourse,
+  history,
+  ...props
+}) {
   const [course, setCourse] = useState({ ...props.course });
   const [errors, setErrors] = useState({});
 
@@ -20,6 +28,10 @@ function ManageCoursePage({ courses, authors, loadAuthors, loadCourses, saveCour
       loadCourses().catch((error) => {
         alert('Loading courses failed' + error);
       });
+    } else {
+      //This will copy the course passed in on props to
+      //state anytime a new course is passed in:
+      setCourse({...props.course})
     }
 
     if (authors.length === 0) {
@@ -27,7 +39,7 @@ function ManageCoursePage({ courses, authors, loadAuthors, loadCourses, saveCour
         alert('Loading authors failed' + error);
       });
     }
-  }, []);
+  }, [props.course]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -39,11 +51,9 @@ function ManageCoursePage({ courses, authors, loadAuthors, loadCourses, saveCour
 
   function handleSave(event) {
     event.preventDefault();
-    saveCourse(course)
-    .then(() => {
+    saveCourse(course).then(() => {
       history.push('/courses');
     });
-    
   }
 
   return (
@@ -64,14 +74,22 @@ ManageCoursePage.propTypes = {
   loadAuthors: PropTypes.func.isRequired,
   loadCourses: PropTypes.func.isRequired,
   saveCourse: PropTypes.func.isRequired,
-  history:PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
+
+//SELECTORS:
+export function getCourseBySlug(courses, slug) {
+  return courses.find((course) => course.slug === slug) || null;
+}
 
 //This func. determines what state is passed to our
 //component via props.
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  const slug = ownProps.match.params.slug;
+  const course =
+    slug && state.courses.length > 0 ? getCourseBySlug(state.courses, slug) : newCourse;
   return {
-    course: newCourse,
+    course,
     courses: state.courses,
     authors: state.authors,
   };

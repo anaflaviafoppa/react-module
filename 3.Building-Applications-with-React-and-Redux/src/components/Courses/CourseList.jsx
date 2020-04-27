@@ -1,31 +1,43 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-const CourseList = (props) => {
-  return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Category</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        {props.courses.map((course) => (
+const CourseList = ({ courses }) => (
+  <table className="table">
+    <thead>
+      <tr>
+        <th />
+        <th>Title</th>
+        <th>Author</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      {courses.map(course => {
+        return (
           <tr key={course.id}>
             <td>
-              <Link to={'/course/' + course.slug}>{course.title} </Link>
+              <a
+                className="btn btn-light"
+                href={"http://pluralsight.com/courses/" + course.slug}
+              >
+                Watch
+              </a>
             </td>
-            <td>{course.authorId === 1 ? 'Cory House' : 'Scott Allen'}</td>
+            <td>
+              <Link to={"/course/" + course.slug}>{course.title}</Link>
+            </td>
+            <td>{course.authorName}</td>
             <td>{course.category}</td>
-            <td><Button variant="danger" onClick={() => props.deleteCourse(course.id)}>Delete</Button></td>
           </tr>
-        ))}
-      </tbody>
-    </table>
-  );
+        );
+      })}
+    </tbody>
+  </table>
+);
+
+CourseList.propTypes = {
+  courses: PropTypes.array.isRequired
 };
+
+export default CourseList;

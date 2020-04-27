@@ -1,11 +1,12 @@
 import React, { Fragment, Component } from 'react';
 // import { Link } from 'react-router-dom';
-// import CourseList from './CourseList.jsx';
+import CourseList from './CourseList.jsx';
 
 //This function will connect components to redux
 import { connect } from 'react-redux';
 
 import * as courseActions from '../../redux/actions/courseActions';
+import * as authorActions from '../../redux/actions/authorActions';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 
@@ -28,25 +29,33 @@ import { bindActionCreators } from 'redux';
 // export default CoursesPage;
 
 class CoursesPage extends Component {
-  componentDidMount(){
-    this.props.actions.loadCourses().catch(error => {
-      alert('Loading courses failed' + error);
-    })
+  componentDidMount() {
+    const { courses, authors, actions } = this.props;
+
+    if (courses.length === 0) {
+      actions.loadCourses().catch((error) => {
+        alert('Loading courses failed' + error);
+      });
+    }
+
+    if (authors.length === 0) {
+      actions.loadAuthors().catch((error) => {
+        alert('Loading authors failed' + error);
+      });
+    }
   }
   render() {
     return (
       <Fragment>
         <h1>Courses</h1>
-
-        {this.props.courses.map((course) => (
-          <div key={course.title}>{course.title}</div>
-        ))}
+        <CourseList courses={this.props.courses} />
       </Fragment>
     );
   }
 }
 
 CoursesPage.propTypes = {
+  authors: PropTypes.array.isRequired,
   courses: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
 };
@@ -55,7 +64,16 @@ CoursesPage.propTypes = {
 //component via props.
 function mapStateToProps(state) {
   return {
-    courses: state.courses,
+    courses:
+      state.authors.length === 0
+        ? []
+        : state.courses.map((course) => {
+            return {
+              ...course,
+              authorName: state.authors.find((a) => a.id === course.authorId).name,
+            };
+          }),
+    authors: state.authors,
   };
 }
 
@@ -63,7 +81,10 @@ function mapStateToProps(state) {
 //to our component on props
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(courseActions, dispatch),
+    actions: {
+      loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
+      loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch)
+    }
   };
 }
 

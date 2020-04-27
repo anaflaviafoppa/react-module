@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Fragment, Component, useEffect } from 'react';
 
 //This function will connect components to redux
 import { connect } from 'react-redux';
@@ -7,10 +7,9 @@ import { loadCourses } from '../../redux/actions/courseActions';
 import { loadAuthors } from '../../redux/actions/authorActions';
 import PropTypes from 'prop-types';
 
-class ManageCoursePage extends Component {
-  componentDidMount() {
-    const { courses, authors, loadAuthors, loadCourses } = this.props;
-
+function ManageCoursePage({ courses, authors, loadAuthors, loadCourses }) {
+  //Will run ones - the second argument is an empty array.
+  useEffect(() => {
     if (courses.length === 0) {
       loadCourses().catch((error) => {
         alert('Loading courses failed' + error);
@@ -22,14 +21,13 @@ class ManageCoursePage extends Component {
         alert('Loading authors failed' + error);
       });
     }
-  }
-  render() {
-    return (
-      <Fragment>
-        <h1>Manage Course</h1>
-      </Fragment>
-    );
-  }
+  }, []);
+
+  return (
+    <Fragment>
+      <h1>Manage Course</h1>
+    </Fragment>
+  );
 }
 
 ManageCoursePage.propTypes = {

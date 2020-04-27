@@ -1,4 +1,4 @@
-import React, { Fragment, Component, useEffect } from 'react';
+import React, { Fragment, Component, useEffect, useState } from 'react';
 
 //This function will connect components to redux
 import { connect } from 'react-redux';
@@ -6,8 +6,15 @@ import { connect } from 'react-redux';
 import { loadCourses } from '../../redux/actions/courseActions';
 import { loadAuthors } from '../../redux/actions/authorActions';
 import PropTypes from 'prop-types';
+import CourseForm from './CourseForm.jsx';
+import { newCourse } from '../../../tools/mockData';
 
-function ManageCoursePage({ courses, authors, loadAuthors, loadCourses }) {
+//Usar ...props para não haver conflito com a variável "course"
+function ManageCoursePage({ courses, authors, loadAuthors, loadCourses, ...props }) {
+  const [course, setCourse] = useState({ ...props.course });
+  const [errors, setErrors] = useState({});
+
+
   //Will run ones - the second argument is an empty array.
   useEffect(() => {
     if (courses.length === 0) {
@@ -24,13 +31,12 @@ function ManageCoursePage({ courses, authors, loadAuthors, loadCourses }) {
   }, []);
 
   return (
-    <Fragment>
-      <h1>Manage Course</h1>
-    </Fragment>
+    <CourseForm course={course} errors={errors} authors={authors} />
   );
 }
 
 ManageCoursePage.propTypes = {
+  course: PropTypes.object.isRequired,
   authors: PropTypes.array.isRequired,
   courses: PropTypes.array.isRequired,
   loadAuthors: PropTypes.func.isRequired,
@@ -41,6 +47,7 @@ ManageCoursePage.propTypes = {
 //component via props.
 function mapStateToProps(state) {
   return {
+    course: newCourse,
     courses: state.courses,
     authors: state.authors,
   };

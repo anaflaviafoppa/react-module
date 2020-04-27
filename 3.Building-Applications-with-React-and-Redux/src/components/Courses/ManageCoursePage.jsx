@@ -14,7 +14,6 @@ function ManageCoursePage({ courses, authors, loadAuthors, loadCourses, ...props
   const [course, setCourse] = useState({ ...props.course });
   const [errors, setErrors] = useState({});
 
-
   //Will run ones - the second argument is an empty array.
   useEffect(() => {
     if (courses.length === 0) {
@@ -30,9 +29,15 @@ function ManageCoursePage({ courses, authors, loadAuthors, loadCourses, ...props
     }
   }, []);
 
-  return (
-    <CourseForm course={course} errors={errors} authors={authors} />
-  );
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setCourse((prevCourse) => ({
+      ...prevCourse,
+      [name]: name === 'authorId' ? parseInt(value, 10) : value,
+    }));
+  }
+
+  return <CourseForm onChange={handleChange} course={course} errors={errors} authors={authors} />;
 }
 
 ManageCoursePage.propTypes = {

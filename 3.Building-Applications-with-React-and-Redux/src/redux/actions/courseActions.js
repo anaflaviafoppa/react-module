@@ -1,5 +1,6 @@
 import * as types from './actionTypes';
 import * as courseApi from '../../api/courseApi';
+import { beginApiCall, apiCallError } from "./apiStatusActions";
 
 
 export function loadCourseSuccess(courses) {
@@ -16,12 +17,14 @@ export function createCourseSuccess(course) {
 
 export function loadCourses() {
   return function (dispatch) {
+    dispatch(beginApiCall())
     return courseApi
       .getCourses()
       .then((courses) => {
         dispatch(loadCourseSuccess(courses));
       })
       .catch((error) => {
+        dispatch(apiCallError(error))
         throw error;
       });
   };
@@ -37,6 +40,7 @@ export function saveCourse(course) {
           : dispatch(createCourseSuccess(savedCourse));
       })
       .catch((error) => {
+        dispatch(apiCallError(error))
         throw error;
       });
   };

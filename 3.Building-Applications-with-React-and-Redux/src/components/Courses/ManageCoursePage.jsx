@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import CourseForm from './CourseForm.jsx';
 import { newCourse } from '../../../tools/mockData';
 import Spinner from '../common/Spinner.jsx';
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 //Usar ...props para não haver conflito com a variável "course"
 function ManageCoursePage({
@@ -55,10 +55,15 @@ function ManageCoursePage({
   function handleSave(event) {
     event.preventDefault();
     setSaving(true);
-    saveCourse(course).then(() => {
-      toast.success('Course saved!')
-      history.push('/courses');
-    });
+    saveCourse(course)
+      .then(() => {
+        toast.success('Course saved!');
+        history.push('/courses');
+      })
+      .catch((error) => {
+        setSaving(false);
+        setErrors({ onSave: error.message });
+      });
   }
 
   return authors.length === 0 || courses.length === 0 ? (

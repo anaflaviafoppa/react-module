@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router-dom';
 import Spinner from '../common/Spinner.jsx';
+import { toast } from 'react-toastify';
 // const CoursesPage = (props) => {
 //   const [course, setCourse] = useState({
 //     title: "",
@@ -49,6 +50,14 @@ class CoursesPage extends Component {
       });
     }
   }
+
+  handleDeleteCourse = (course) => {
+    toast.success('Course deleted!');
+    this.props.actions.deleteCourse(course).catch((error) => {
+      toast.error('Delete failed. ' + error.message, { autoClose: false });
+    });
+  };
+
   render() {
     return (
       <Fragment>
@@ -66,7 +75,7 @@ class CoursesPage extends Component {
             >
               Add Course
             </button>
-            <CourseList courses={this.props.courses} />
+            <CourseList courses={this.props.courses} onDelete={this.handleDeleteCourse} />
           </>
         )}
       </Fragment>
@@ -106,6 +115,7 @@ function mapDispatchToProps(dispatch) {
     actions: {
       loadCourses: bindActionCreators(courseActions.loadCourses, dispatch),
       loadAuthors: bindActionCreators(authorActions.loadAuthors, dispatch),
+      deleteCourse: bindActionCreators(courseActions.deleteCourse, dispatch),
     },
   };
 }

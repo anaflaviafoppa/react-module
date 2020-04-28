@@ -8,6 +8,7 @@ import { loadAuthors } from '../../redux/actions/authorActions';
 import PropTypes from 'prop-types';
 import CourseForm from './CourseForm.jsx';
 import { newCourse } from '../../../tools/mockData';
+import Spinner from '../common/Spinner.jsx';
 
 //Usar ...props para não haver conflito com a variável "course"
 function ManageCoursePage({
@@ -21,6 +22,7 @@ function ManageCoursePage({
 }) {
   const [course, setCourse] = useState({ ...props.course });
   const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
   //Will run ones - the second argument is an empty array.
   useEffect(() => {
@@ -31,7 +33,7 @@ function ManageCoursePage({
     } else {
       //This will copy the course passed in on props to
       //state anytime a new course is passed in:
-      setCourse({...props.course})
+      setCourse({ ...props.course });
     }
 
     if (authors.length === 0) {
@@ -51,18 +53,22 @@ function ManageCoursePage({
 
   function handleSave(event) {
     event.preventDefault();
+    setSaving(true);
     saveCourse(course).then(() => {
       history.push('/courses');
     });
   }
 
-  return (
+  return authors.length === 0 || courses.length === 0 ? (
+    <Spinner />
+  ) : (
     <CourseForm
       onChange={handleChange}
       onSave={handleSave}
       course={course}
       errors={errors}
       authors={authors}
+      saving={saving}
     />
   );
 }
